@@ -142,6 +142,7 @@
 		<profile>
 			<id>sonar</id>
 			<build>
+			<pluginManagement>
 				<plugins>
 					<plugin>
 						<groupId>org.jacoco</groupId>
@@ -181,11 +182,13 @@
 						</configuration>
 					</plugin>
 				</plugins>
+				</pluginManagement>
 			</build>
 		</profile>
 	</profiles>
 
 	<build>
+	<pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -194,8 +197,11 @@
 			<plugin>
 				<groupId>io.spring.javaformat</groupId>
 				<artifactId>spring-javaformat-maven-plugin</artifactId>
-			</plugin>
+			</plugin>			
 		</plugins>
+
+		</pluginManagement>
+
 	</build>
 
 	<reporting>
