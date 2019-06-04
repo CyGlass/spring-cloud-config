@@ -70,8 +70,19 @@ public class GenericResourceRepository
 						if (!isInvalidPath(local) && !isInvalidEncodedPath(local)) {
 							Resource file = this.resourceLoader.getResource(location)
 									.createRelative(local);
-							if (file.exists() && file.isReadable()) {
-								return file;
+							if (file.exists()) {
+								if (file.isReadable()) {
+									return file;
+								} else {
+									// see if file is a directory, maybe use java.io.File.isDirectory() ?
+									// parts of this logic can be found in org.springframework.core.io.AbstractFileResolvingResource
+									//  and org.springframework.core.io.FileUrlResource
+									if (ResourceUtils.isFileURL(file.getURL())) {
+										if (file.getFile().canRead()) {
+											return file;
+										}
+									}
+								}
 							}
 						}
 					}

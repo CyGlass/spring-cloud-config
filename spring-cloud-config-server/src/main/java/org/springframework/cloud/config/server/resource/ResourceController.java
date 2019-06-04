@@ -16,6 +16,10 @@
 
 package org.springframework.cloud.config.server.resource;
 
+import static org.springframework.cloud.config.server.support.EnvironmentPropertySource.prepareEnvironment;
+import static org.springframework.cloud.config.server.support.EnvironmentPropertySource.resolvePlaceholders;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -36,8 +40,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.util.UrlPathHelper;
 
-import static org.springframework.cloud.config.server.support.EnvironmentPropertySource.prepareEnvironment;
-import static org.springframework.cloud.config.server.support.EnvironmentPropertySource.resolvePlaceholders;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * An HTTP endpoint for serving up templated plain text resources from an underlying
@@ -56,6 +61,8 @@ import static org.springframework.cloud.config.server.support.EnvironmentPropert
 		path = "${spring.cloud.config.server.prefix:}")
 public class ResourceController {
 
+	private ObjectMapper objectMapper = new ObjectMapper();
+	
 	private ResourceRepository resourceRepository;
 
 	private EnvironmentRepository environmentRepository;
@@ -106,19 +113,38 @@ public class ResourceController {
 		name = resolveName(name);
 		label = resolveLabel(label);
 		Resource resource = this.resourceRepository.findOne(name, profile, label, path);
+		//resource.getFile().isDirectory()
 		if (checkNotModified(request, resource)) {
 			// Content was not modified. Just return.
 			return null;
 		}
 		// ensure InputStream will be closed to prevent file locks on Windows
-		try (InputStream is = resource.getInputStream()) {
-			String text = StreamUtils.copyToString(is, Charset.forName("UTF-8"));
-			if (resolvePlaceholders) {
-				Environment environment = this.environmentRepository.findOne(name,
-						profile, label);
-				text = resolvePlaceholders(prepareEnvironment(environment), text);
+		
+		if (resource.getFile().isDirectory()) {
+			File directory = resource.getFile();
+			
+			ObjectNode listing = objectMapper.createObjectNode();
+			listing.put("org", name);
+			listing.put("profile", profile);
+			listing.put("branch", label);
+			listing.put("path", path);
+			ArrayNode resources = objectMapper.createArrayNode();
+	        File[] contents = directory.listFiles();
+	        for (File item : contents) {
+	        	resources.add(item.getName());
+	        }
+			listing.set("resources", resources);
+			return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(listing);
+		} else {
+			try (InputStream is = resource.getInputStream()) {
+				String text = StreamUtils.copyToString(is, Charset.forName("UTF-8"));
+				if (resolvePlaceholders) {
+					Environment environment = this.environmentRepository.findOne(name,
+							profile, label);
+					text = resolvePlaceholders(prepareEnvironment(environment), text);
+				}
+				return text;
 			}
-			return text;
 		}
 	}
 
