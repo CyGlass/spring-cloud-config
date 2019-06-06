@@ -26,6 +26,7 @@
 		<tag>HEAD</tag>
 	</scm>
 	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
 		<bintray.package>config</bintray.package>
 		<spring-cloud-commons.version>2.2.0.BUILD-SNAPSHOT</spring-cloud-commons.version>
 		<maven-checkstyle-plugin.failsOnError>true</maven-checkstyle-plugin.failsOnError>
