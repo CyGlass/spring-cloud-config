@@ -16,6 +16,22 @@
 		<version>2.2.0.BUILD-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
+	<distributionManagement>
+    	<repository>
+        	<id>cyglass_nexus</id>
+        	<name>cyglass_nexus</name>
+        	<url>http://admin:admin123@18.220.27.185:8081/repository/thirdparty</url>
+        	<layout>default</layout>
+    	</repository>
+    	<snapshotRepository>
+        	<id>cyglass_nexus-snapshots</id>
+        	<name>cyglass_nexus-snapshots</name>
+        	<url>http://admin:admin123@18.220.27.185:8081/repository/maven-snapshots</url>
+        	<layout>default</layout>
+    	</snapshotRepository>
+	</distributionManagement>
+
 	<scm>
 		<url>https://github.com/spring-cloud/spring-cloud-config</url>
 		<connection>scm:git:git://github.com/spring-cloud/spring-cloud-config.git
