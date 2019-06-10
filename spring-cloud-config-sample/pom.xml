@@ -9,7 +9,8 @@
 
 	<name>spring-cloud-config-sample</name>
 	<description>spring-cloud-config-server</description>
-
+    <version>2.2.0</version>
+    
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-config</artifactId>
