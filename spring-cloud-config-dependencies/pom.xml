@@ -10,16 +10,16 @@
 		<relativePath/>
 	</parent>
 	
-    <distributionManagement>
-        <repository>
-            <id>CyGlass Sonatype Nexus Pirate Repository</id>
-            <url>http://admin:admin123@18.220.27.185:8081/repository/local</url>
-        </repository>
-        <snapshotRepository>
-            <id>CyGlass Sonatype Nexus Pirate Repository</id>
-            <url>http://admin:admin123@18.220.27.185:8081/repository/maven-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+        <distributionManagement>
+            <repository>
+                <id>CyGlass Sonatype Nexus Pirate Repository</id>
+                <url>http://admin:admin123@18.220.27.185:8081/repository/local</url>
+            </repository>
+            <snapshotRepository>
+                <id>CyGlass Sonatype Nexus Pirate Repository</id>
+                <url>http://admin:admin123@18.220.27.185:8081/repository/maven-snapshots</url>
+            </snapshotRepository>
+        </distributionManagement>
     
 	<artifactId>spring-cloud-config-dependencies</artifactId>
 	<version>2.2.0</version>
@@ -30,21 +30,6 @@
 		<jgit.version>5.1.3.201810200350-r</jgit.version>
 		<spring-credhub.version>2.0.0.RELEASE</spring-credhub.version>
 	</properties>
-
-	<distributionManagement>
-    	<repository>
-        	<id>cyglass_nexus</id>
-        	<name>cyglass_nexus</name>
-        	<url>http://admin:admin123@18.220.27.185:8081/repository/thirdparty</url>
-        	<layout>default</layout>
-    	</repository>
-    	<snapshotRepository>
-        	<id>cyglass_nexus-snapshots</id>
-        	<name>cyglass_nexus-snapshots</name>
-        	<url>http://admin:admin123@18.220.27.185:8081/repository/maven-snapshots</url>
-        	<layout>default</layout>
-    	</snapshotRepository>
-	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>

@@ -14,9 +14,24 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-config</artifactId>
-		<version>2.2.0.BUILD-SNAPSHOT</version>
+		<version>2.2.0</version>
 		<relativePath>..</relativePath>
 	</parent>
+
+	<distributionManagement>
+		<repository>
+			<id>CyGlass Sonatype Nexus Pirate Repository</id>
+			<name>cyglass_nexus</name>
+			<url>http://admin:admin123@18.220.27.185:8081/repository/local</url>
+			<layout>default</layout>
+		</repository>
+		<snapshotRepository>
+			<id>CyGlass Sonatype Nexus Pirate Repository</id>
+			<name>cyglass_nexus-snapshots</name>
+			<url>http://admin:admin123@18.220.27.185:8081/repository/maven-snapshots</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>

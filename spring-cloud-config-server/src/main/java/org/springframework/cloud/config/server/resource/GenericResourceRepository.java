@@ -73,14 +73,16 @@ public class GenericResourceRepository
 							if (file.exists()) {
 								if (file.isReadable()) {
 									return file;
-								} else {
-									// see if file is a directory, maybe use java.io.File.isDirectory() ?
-									// parts of this logic can be found in org.springframework.core.io.AbstractFileResolvingResource
-									//  and org.springframework.core.io.FileUrlResource
-									if (ResourceUtils.isFileURL(file.getURL())) {
-										if (file.getFile().canRead()) {
-											return file;
-										}
+								}
+								else {
+									// see if file is a directory, maybe use
+									// java.io.File.isDirectory() ?
+									// parts of this logic can be found in
+									// org.springframework.core.io.AbstractFileResolvingResource
+									// and org.springframework.core.io.FileUrlResource
+									if (ResourceUtils.isFileURL(file.getURL())
+											&& file.getFile().canRead()) {
+										return file;
 									}
 								}
 							}
